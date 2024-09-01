@@ -14,7 +14,7 @@ library(dplyr)
 #prog_drug / p_drug = Progressed from first line and given new drug in second line
 #prog_nodrug / p_nodrug = Progressed from first line and put in palliative care
 #AE = Adverse Event (not ILD)
-#ILD = Interstitial lund disease
+#ILD = Interstitial lung disease
 
 #Import the results and functions from other files.
 source("finding_transition_probabilities_7state.R") #We get opt_var from this
@@ -95,8 +95,8 @@ induceRankCorrelation <- function(X, Y, Sigma){
 generate_psa_qaly_params <- function(n_sim, seed = 0){
   #Draw values for QALYs
   qaly_pf <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.81-0.52) + rep(0.52, n_sim)
-  qaly_p_drug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.65-0.4) + rep(0.4, n_sim)
-  qaly_p_nodrug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*((0.26*1.25)-(0.26*0.75)) + rep(0.26*0.75, n_sim)
+  qaly_p_drug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.65-0.297) + rep(0.297, n_sim)
+  qaly_p_nodrug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*((0.40*1.25)-(0.40*0.75)) + rep(0.40*0.75, n_sim)
   qaly_pfAE <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.707-0.417) + rep(0.417, n_sim)
   qaly_pAE <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.65-0.297) + rep(0.297, n_sim)
   qaly_pfILD <- rbeta(n_sim, shape1 = 2, shape2 = 2)*(0.707-0.417) + rep(0.417, n_sim)
@@ -198,7 +198,7 @@ generate_psa_cost_params <- function(n_sim, seed = 0){
   cost_pf_tdxd <- (drug_price_tdxd)*4/3 + rep(522.43, n_sim)
 
   #Calculate the cost of P in chemo and tdxd:
-  cost_p_chemo <- cost_pf_chemo #rgamma(n_sim, shape = (10882.601)^2/(2114.74)^2, scale = ((2114.74)^2/10882.601))
+  cost_p_chemo <- cost_pf_chemo 
   cost_p_tdxd <- cost_pf_tdxd
   
   #SG price
@@ -211,14 +211,14 @@ generate_psa_cost_params <- function(n_sim, seed = 0){
   
   #Calculate the cost of the AE and ILD states for both chemo and tdxd:
   cost_pfAE_chemo <- rbeta(n_sim, shape1 = 2, shape2 = 2)*((4518.18*1.25)-(4518.18*0.75)) + rep(575.19, n_sim) #+ rep(518.18, n_sim)
-  cost_pAE_chemo <- rgamma(n_sim, shape = (10882.601)^2/(2114.74)^2, scale = ((2114.74)^2/10882.601))#cost_p_chemo
+  cost_pAE_chemo <- rgamma(n_sim, shape = (10349.861591)^2/(2114.74)^2, scale = ((2114.74)^2/10349.861591))#cost_p_chemo
   cost_pfAE_tdxd <- cost_pfAE_chemo
   cost_pAE_tdxd <- cost_pAE_chemo
   cost_pfILD_tdxd <-cost_pfAE_chemo
   cost_pILD_tdxd <-cost_pAE_chemo
   
   #ADD TERMINAL STATE COST
-  cost_p_nodrug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*((10882.60*1.25)-(10882.60*0.75)) + rep(10882.60*0.75, n_sim)
+  cost_p_nodrug <- rbeta(n_sim, shape1 = 2, shape2 = 2)*((10349.86159*1.25)-(10349.86159*0.75)) + rep(10349.86159*0.75, n_sim)
   
 
   df_cost_params <- data.frame(
@@ -444,7 +444,7 @@ run_PSA <- function(df_params){
                          cost_pAE = df_params[i,]$cost_pAE_tdxd, 
                          cost_pfILD = df_params[i,]$cost_pfILD_tdxd, 
                          cost_pILD = df_params[i,]$cost_pILD_tdxd,
-                         additional_cost = 7519.15)
+                         additional_cost = 7461.730261)
     tdxd_chemo_qaly <- c(qaly_pf = df_params[i,]$qaly_pf, 
                          qaly_p_drug = df_params[i,]$qaly_p_drug, 
                          qaly_p_nodrug = df_params[i,]$qaly_p_nodrug, 
@@ -500,7 +500,7 @@ run_PSA <- function(df_params){
                       cost_pAE = df_params[i,]$cost_pAE_tdxd, 
                       cost_pfILD = df_params[i,]$cost_pfILD_tdxd, 
                       cost_pILD = df_params[i,]$cost_pILD_tdxd,
-                      additional_cost = 7519.15)
+                      additional_cost = 7461.730261)
     tdxd_sg_qaly <- c(qaly_pf = df_params[i,]$qaly_pf, 
                       qaly_p_drug = df_params[i,]$qaly_p_drug, 
                       qaly_p_nodrug = df_params[i,]$qaly_p_nodrug, 
@@ -612,7 +612,7 @@ run_PSA <- function(df_params){
 
 
 #IMPORTANT NUMBER. Change this to change the final number of simulations
-n = 20
+n = 10000
 
 df_param <- PSA_params(n)
 
@@ -630,27 +630,27 @@ jimbo_final_df$ICER <- NULL
 jimbo_final_df <- jimbo_final_df %>%
   filter(sim <= 1000)
 
-hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-Chemo'])
-hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-TDxd'])
-hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-Chemo'])
-hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-SG'])
+# hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-Chemo'])
+# hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-TDxd'])
+# hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-Chemo'])
+# hist(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-SG'])
+# 
+# hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-Chemo'])
+# hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-TDxd'])
+# hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-Chemo'])
+# hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-SG'])
+# 
+# mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-Chemo'])
+# mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-TDxd'])
+# mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-Chemo'])
+# mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-SG'])
+# 
+# mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-Chemo'])
+# mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-TDxd'])
+# mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-Chemo'])
+# mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-SG'])
 
-hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-Chemo'])
-hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-TDxd'])
-hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-Chemo'])
-hist(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-SG'])
-
-mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-Chemo'])
-mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'Chemo-TDxd'])
-mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-Chemo'])
-mean(jimbo_final_df$DiscountedCost[jimbo_final_df$group == 'TDxD-SG'])
-
-mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-Chemo'])
-mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'Chemo-TDxd'])
-mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-Chemo'])
-mean(jimbo_final_df$DiscountedQALY[jimbo_final_df$group == 'TDxD-SG'])
-
-write.csv(jimbo_final_df, file = "/Users/jamesdickerson/Library/CloudStorage/Box-Box/Dickerson Lab/Dickerson_Lab_Github/CEA_of_TDXd/Data_/Outputs/base_case_output.csv")
+write.csv(jimbo_final_df, file = "data/base_case_output.csv")
 
 #Output Table 
 # Calculate mean by group

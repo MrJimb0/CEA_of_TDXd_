@@ -2,24 +2,15 @@
 #Oversight from Jeremy Goldhaber-Feibert, PhD and Fernando Alarid-Escudero, Ph.D.
 
 options(scipen=999)
-# setwd("/Users/jamesdickerson/Library/CloudStorage/Box-Box/Dickerson Lab/Dickerson_Lab_Github/CEA_of_TDXd/")
 
 #The target variables in line 161 are the values we are calibrating to. Change this if you want to change the calibration
 #The sd corresponding to the targets is found at line 296
 
-
-
-
-
 #Function for calculating the standard error of a survival curve given 
 #number at risk, n_risk, number of deaths at each timestep, n_deaths, and the survival probabilities, surv_prob
 
-
 library(expm)
 library(ggplot2)
-# library(ggpubr)
-
-
 
 #Function for finding the transition matrices such that they can be imported to the CEA file
 #Takes as its input the optimal values for the eval_variables function and outputs a list of transition matrices
@@ -445,45 +436,45 @@ plot_function <- function(input_var){
   
   
   
-  plot1 <- ggplot(df, aes(x=idx)) + 
-    geom_line(aes(y = km_os_chemo_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_os_chemo[1:m]), color="blue", linetype="twodash") +
-    ylim(0, 1) +
-    ylab("Probability") +
-    xlab("Month") +
-    ggtitle("OS physician's choice")+
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
-                                                                   axis.title=element_text(size=14))
-  
-  plot2 <- ggplot(df, aes(x=idx)) + 
-    geom_line(aes(y = km_os_tdxd_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_os_tdxd[1:m]), color="blue", linetype="twodash") +
-    ylim(0, 1) +
-    ylab("Probability")+
-    xlab("Month")+
-    ggtitle("OS T-DxD")+
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
-                                                                   axis.title=element_text(size=14))
-  
-  plot3 <- ggplot(df, aes(x=idx)) + 
-    geom_line(aes(y = km_pf_chemo_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_pf_chemo[1:m]), color="blue", linetype="twodash") +
-    ylim(0, 1) +
-    ylab("Probability")+
-    xlab("Month")+
-    ggtitle("PFS physician's choice")+
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
-                                                                   axis.title=element_text(size=14))
-  
-  plot4 <- ggplot(df, aes(x=idx)) + 
-    geom_line(aes(y = km_pf_tdxd_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_pf_tdxd[1:m]), color="blue", linetype="twodash") +
-    ylim(0, 1) +
-    ylab("Probability")+
-    xlab("Month")+
-    ggtitle("PFS T-DxD")+
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
-                                                                   axis.title=element_text(size=14))
+  # plot1 <- ggplot(df, aes(x=idx)) + 
+  #   geom_line(aes(y = km_os_chemo_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_os_chemo[1:m]), color="blue", linetype="twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability") +
+  #   xlab("Month") +
+  #   ggtitle("OS physician's choice")+
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
+  #                                                                  axis.title=element_text(size=14))
+  # 
+  # plot2 <- ggplot(df, aes(x=idx)) + 
+  #   geom_line(aes(y = km_os_tdxd_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_os_tdxd[1:m]), color="blue", linetype="twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability")+
+  #   xlab("Month")+
+  #   ggtitle("OS T-DxD")+
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
+  #                                                                  axis.title=element_text(size=14))
+  # 
+  # plot3 <- ggplot(df, aes(x=idx)) + 
+  #   geom_line(aes(y = km_pf_chemo_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_pf_chemo[1:m]), color="blue", linetype="twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability")+
+  #   xlab("Month")+
+  #   ggtitle("PFS physician's choice")+
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
+  #                                                                  axis.title=element_text(size=14))
+  # 
+  # plot4 <- ggplot(df, aes(x=idx)) + 
+  #   geom_line(aes(y = km_pf_tdxd_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_pf_tdxd[1:m]), color="blue", linetype="twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability")+
+  #   xlab("Month")+
+  #   ggtitle("PFS T-DxD")+
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1))+theme(axis.text=element_text(size=12),
+  #                                                                  axis.title=element_text(size=14))
   
   print(ae_test_chemo)
   print(ae_test_tdxd)

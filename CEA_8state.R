@@ -2,21 +2,20 @@
 #Oversight from Jeremy Goldhaber-Feibert, PhD and Fernando Alarid-Escudero, Ph.D.
 
 options(scipen=999)
-setwd("/Users/jamesdickerson/Library/CloudStorage/Box-Box/Dickerson Lab/Dickerson_Lab_Github/CEA_of_TDXd/")
 
 #INPUT DATA
 
 tdxd_chemo_cost <- c(cost_pf = 14113.690, 
                      cost_p_drug = 7203.56, 
-                     cost_p_nodrug = 10882.60, 
+                     cost_p_nodrug = 10349.86159, 
                      cost_pfAE = 5093.37, 
-                     cost_pAE = 10882.60, 
+                     cost_pAE = 10349.86159, 
                      cost_pfILD = 5093.37, 
-                     cost_pILD = 10882.60,
-                     additional_cost = 7519.15)
+                     cost_pILD = 10349.86159,
+                     additional_cost = 7461.730261)
 tdxd_chemo_qaly <- c(qaly_pf = 0.65, 
                      qaly_p_drug = 0.54, 
-                     qaly_p_nodrug = 0.26, 
+                     qaly_p_nodrug = 0.40, 
                      qaly_pfAE = 0.547, 
                      qaly_pAE = 0.54, 
                      qaly_pfILD = 0.547, 
@@ -25,15 +24,15 @@ tdxd_chemo_qaly <- c(qaly_pf = 0.65,
 
 chemo_tdxd_cost <- c(cost_pf = 7203.56, 
                      cost_p_drug = 14113.69, 
-                     cost_p_nodrug = 10882.60, 
+                     cost_p_nodrug = 10349.86159, 
                      cost_pfAE = 5093.37, 
-                     cost_pAE = 10882.60, 
+                     cost_pAE = 10349.86159, 
                      cost_pfILD = 5093.37, 
-                     cost_pILD = 10882.60,
+                     cost_pILD = 10349.86159,
                      additional_cost = 10435.36588)
 chemo_tdxd_qaly <- c(qaly_pf = 0.65, 
                      qaly_p_drug = 0.54, 
-                     qaly_p_nodrug = 0.26, 
+                     qaly_p_nodrug = 0.40, 
                      qaly_pfAE = 0.547, 
                      qaly_pAE = 0.54, 
                      qaly_pfILD = 0.547, 
@@ -41,34 +40,33 @@ chemo_tdxd_qaly <- c(qaly_pf = 0.65,
                      decrement_qaly_ae = 0.0714327)
 
 tdxd_sg_cost <- c(cost_pf = 14113.69, 
-                  cost_p_drug = 24802.37, 
-                  cost_p_nodrug = 10882.60, 
+                  cost_p_drug = 23970.46, 
+                  cost_p_nodrug = 10349.86159, 
                   cost_pfAE = 5093.37, 
-                  cost_pAE = 10882.60, 
+                  cost_pAE = 10349.86159, 
                   cost_pfILD = 5093.37, 
-                  cost_pILD = 10882.60,
-                  additional_cost = 7519.15)
+                  cost_pILD = 10349.86159,
+                  additional_cost = 7461.730261)
 tdxd_sg_qaly <- c(qaly_pf = 0.65, 
                   qaly_p_drug = 0.54, 
-                  qaly_p_nodrug = 0.26, 
+                  qaly_p_nodrug = 0.40, 
                   qaly_pfAE = 0.547, 
                   qaly_pAE = 0.54, 
                   qaly_pfILD = 0.547, 
                   qaly_pILD = 0.54, 
                   decrement_qaly_ae = 0.05604)
 
-#Look at the third value again and confirm!
 chemo_chemo_cost <- c(cost_pf = 7203.56, 
                       cost_p_drug = 5093.37, 
-                      cost_p_nodrug = 10882.60, 
+                      cost_p_nodrug = 10349.86159, 
                       cost_pfAE = 5093.37, 
-                      cost_pAE = 10882.60, 
+                      cost_pAE = 10349.86159, 
                       cost_pfILD = 5093.37, 
-                      cost_pILD = 10882.60,
+                      cost_pILD = 10349.86159,
                       additional_cost = 10435.36588)
 chemo_chemo_qaly <- c(qaly_pf = 0.65, 
                       qaly_p_drug = 0.54, 
-                      qaly_p_nodrug = 0.26, 
+                      qaly_p_nodrug = 0.40, 
                       qaly_pfAE = 0.547, 
                       qaly_pAE = 0.54, 
                       qaly_pfILD = 0.547, 

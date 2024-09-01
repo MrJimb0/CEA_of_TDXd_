@@ -2,12 +2,9 @@
 #Oversight from Jeremy Goldhaber-Feibert, PhD and Fernando Alarid-Escudero, Ph.D.
 
 options(scipen=999)
-# setwd("/Users/jamesdickerson/Library/CloudStorage/Box-Box/Dickerson Lab/Dickerson_Lab_Github/CEA_of_TDXd/")
 
 library(expm)
 library(ggplot2)
-# library(ggpubr)
-
 
 #Notation used in this file:
 #pf = Progression Free first-line
@@ -33,7 +30,6 @@ library(ggplot2)
 
 
 source("finding_transition_probabilities_7state.R") #We get opt_var from this
-
 
 #GLOBAL VARIABLES (START):
 seven_state_var <- c(r_pf2prog = opt_var[1],
@@ -578,32 +574,32 @@ plot_function <- function(tm_tdxd_chemo){
   
   
   
-  plot2 <- ggplot(df, aes(x=idx)) + 
-    geom_line(aes(y = km_os_tdxd_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_os_tdxd[1:m]), color="blue", linetype="twodash") +
-    ylim(0, 1) +
-    ylab("Probability")+
-    xlab("Month")+
-    ggtitle("OS T-DxD")+
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1)) + 
-    theme(axis.text = element_text(size = 12),
-          axis.title = element_text(size = 14))
-  
-  plot4 <- ggplot(df, aes(x = idx)) + 
-    geom_line(aes(y = km_pf_tdxd_model[1:m]), color = "red") + 
-    geom_line(aes(y = km_pf_tdxd[1:m]), color = "blue", linetype = "twodash") +
-    ylim(0, 1) +
-    ylab("Probability") +
-    xlab("Month") +
-    ggtitle("PFS T-DxD") +
-    scale_x_continuous(breaks = round(seq(0, 18, by = 3),1)) + 
-    theme(axis.text = element_text(size = 12),
-          axis.title = element_text(size = 14))
-  
-  print(ae_test_tdxd)
-  print(ae_test_ild)
-  plot(0:(length(ae_test_tdxd)-1), ae_test_tdxd, type = "l")
-  plot(0:(length(ae_test_tdxd)-1), ae_test_ild, type = "l")
+  # plot2 <- ggplot(df, aes(x=idx)) + 
+  #   geom_line(aes(y = km_os_tdxd_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_os_tdxd[1:m]), color="blue", linetype="twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability")+
+  #   xlab("Month")+
+  #   ggtitle("OS T-DxD")+
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1)) + 
+  #   theme(axis.text = element_text(size = 12),
+  #         axis.title = element_text(size = 14))
+  # 
+  # plot4 <- ggplot(df, aes(x = idx)) + 
+  #   geom_line(aes(y = km_pf_tdxd_model[1:m]), color = "red") + 
+  #   geom_line(aes(y = km_pf_tdxd[1:m]), color = "blue", linetype = "twodash") +
+  #   ylim(0, 1) +
+  #   ylab("Probability") +
+  #   xlab("Month") +
+  #   ggtitle("PFS T-DxD") +
+  #   scale_x_continuous(breaks = round(seq(0, 18, by = 3),1)) + 
+  #   theme(axis.text = element_text(size = 12),
+  #         axis.title = element_text(size = 14))
+  # 
+  # print(ae_test_tdxd)
+  # print(ae_test_ild)
+  # plot(0:(length(ae_test_tdxd)-1), ae_test_tdxd, type = "l")
+  # plot(0:(length(ae_test_tdxd)-1), ae_test_ild, type = "l")
   
   # ggarrange(plot2, plot4,
   #           ncol = 1, nrow = 2, common.legend = TRUE,legend="bottom") 
