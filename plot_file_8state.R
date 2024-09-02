@@ -355,7 +355,7 @@ plot_function(opt_var)
 
 #One Way Sensitivity Analysis of Cost (appendix)
 #9/1/24 updated the QALY and cost values to correct ones
-#MARCUS, cost2 is not defined. Lines 360 - 493
+                     
 
 one_way_sensitivity_tdxd_price <- function(df, dr_v){
   
@@ -456,16 +456,27 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
       
   }
   
+  m2 <- (df_results$Cost[3]-df_results$Cost[1])/(df_results$Willingness2Pay[3]-df_results$Willingness2Pay[1])
+  b2 <- df_results$Cost[3]-m2*df_results$Willingness2Pay[3]
+  cost2 <- 150000*m2+b2
+  
+  m1 <- (df_results$Cost[4]-df_results$Cost[2])/(df_results$Willingness2Pay[4]-df_results$Willingness2Pay[2])
+  b1 <- df_results$Cost[4]-m1*df_results$Willingness2Pay[4]
+  cost1 <- 150000*m1+b1
+  
+  p_reduction1 <- 1-cost1/14300.690
+  p_reduction2 <- 1-cost2/14300.690
+  
   # Plotting the results
   dot_df <- data.frame(
     Willingness2Pay = 150000,
-    Cost = c(7700, 11320),  # adjust these values to match the y-values of the lines
+    Cost = c(cost1, cost2),  # adjust these values to match the y-values of the lines
     Comparison = c("Comparison 1", "Comparison 2"))
   
   ggplot(data = df_results, aes(x = Cost, y = Willingness2Pay, color = Comparison, group = Comparison)) +
     annotate("text", y = 50000, x = 14300.690-522.43, label = "T-DXd Actual Monthly Cost", family = "Arial", size = 3) +
-    annotate("text", y = 175000, x = cost2, label = paste0(round(p_reduction2*100, 0), "% Cost Reduction"), family = "Arial", size = 3, vjust = 0.5) +
-    annotate("text", y = 175000, x = cost1, label = paste0(round(p_reduction1*100, 0), "% Cost Reduction2"), family = "Arial", size = 3, vjust = 0.5) +
+    annotate("text", y = 175000, x = cost2, label = paste0(round(cost2, 1), " USD"), family = "Arial", size = 3, vjust = 0.5) +
+    annotate("text", y = 175000, x = cost1, label = paste0(round(cost1, 1), " USD"), family = "Arial", size = 3, vjust = 0.5) +
     geom_line(aes(linetype = Comparison, show.legend = FALSE)) +
     geom_point(aes(shape = Comparison), size = 3, show.legend = FALSE) +  # fixed size to 3
     geom_vline(xintercept = 14113.690, linetype = "dashed", color = "black") + 
@@ -475,10 +486,10 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
     scale_linetype_manual(values = c("solid", "dashed", "dotdash", "longdash")) + 
     scale_shape_manual(values = c(16, 17, 18, 19)) + 
     labs(x = "T-DXd Monthly Dose Cost ($)", y = "Cost-Effectiveness ($)", color = "Compared Strategies", linetype = "Compared Strategies", shape = "Compared Strategies") +
-    scale_y_continuous(limits = c(0, 300000), breaks = seq(0, 500000, 30000)) +
+    scale_y_continuous(limits = c(0, 400000), breaks = seq(0, 500000, 40000)) +
     scale_x_continuous(limits = c(5000, 15000), breaks = seq(5000, 15000, 2500)) +
     theme_minimal() +
-    ggtitle("One-way Sensitivity Analysis of Dose T-DXd Monthly Price") +
+    ggtitle("One-way Sensitivity Analysis of T-DXd Cost") +
     theme(axis.line = element_line(size = 1, color = "black"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
@@ -491,7 +502,6 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
 #Appendix Plot
 df_one_way = list(df_tdxd_chemo, df_chemo_tdxd, df_tdxd_sg)
 one_way_sensitivity_tdxd_price(df_one_way, dr_v = df_list_tdxd_chemo[[3]])
-
 
 
 
