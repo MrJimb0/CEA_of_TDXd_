@@ -392,6 +392,7 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
   
   df_tdxd_chemo = df[[1]]
   df_chemo_tdxd = df[[2]]
+  df_chemo_chemo = df[[3]]
   
   # Initialize empty data frames to store results
   df_results <- data.frame()
@@ -400,30 +401,31 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
     
     tdxd_chemo_cost <- c(cost_pf = i, 
                          cost_p_drug = 7203.56, 
-                         cost_p_nodrug = 10749.48, 
+                         cost_p_nodrug = 10349.86159, 
                          cost_pfAE = 5093.37, 
-                         cost_pAE = 10749.48, 
+                         cost_pAE = 10349.86159, 
                          cost_pfILD = 5093.37, 
-                         cost_pILD = 10749.48,
-                         additional_cost = 7461.73)
+                         cost_pILD = 10349.86159,
+                         additional_cost = 7461.730261)
     
     chemo_tdxd_cost <- c(cost_pf = 7203.56, 
                          cost_p_drug = i, 
-                         cost_p_nodrug = 10749.48, 
+                         cost_p_nodrug = 10349.86159, 
                          cost_pfAE = 5093.37, 
-                         cost_pAE = 10749.48, 
+                         cost_pAE = 10349.86159, 
                          cost_pfILD = 5093.37, 
-                         cost_pILD = 10749.48,
-                         additional_cost = 10349.86)
+                         cost_pILD = 10349.86159,
+                         additional_cost = 10435.36588)
   
+      
       chemo_chemo_cost <- c(cost_pf = 7203.56, 
-                          cost_p_drug = 5093.37, 
-                          cost_p_nodrug = 10749.48, 
-                          cost_pfAE = 5093.37, 
-                          cost_pAE = 10749.48, 
-                          cost_pfILD = 5093.37, 
-                          cost_pILD = 10749.48,
-                          additional_cost = 10349.86)
+                            cost_p_drug = 5093.37, 
+                            cost_p_nodrug = 10349.86159, 
+                            cost_pfAE = 5093.37, 
+                            cost_pAE = 10349.86159, 
+                            cost_pfILD = 5093.37, 
+                            cost_pILD = 10349.86159,
+                            additional_cost = 10435.36588)
     
     
       # Calculate summary data for each comparison
@@ -437,7 +439,7 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
                                               qaly_data = chemo_tdxd_qaly, 
                                               dr_v = dr_v)
       
-      res_vec_chemo_chemo <- calc_summary_data(df = df_chemo_tdxd, 
+      res_vec_chemo_chemo <- calc_summary_data(df = df_chemo_chemo, 
                                                cost_data = chemo_chemo_cost, 
                                                qaly_data = chemo_chemo_qaly, 
                                                dr_v = dr_v)
@@ -454,8 +456,9 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
                                      Cost = rep(i, 2),
                                      Comparison = c('T-DXd → chemo vs chemo → T-DXd', 'T-DXd → chemo vs. chemo → chemo')))
       
+      
   }
-  
+
   m2 <- (df_results$Cost[3]-df_results$Cost[1])/(df_results$Willingness2Pay[3]-df_results$Willingness2Pay[1])
   b2 <- df_results$Cost[3]-m2*df_results$Willingness2Pay[3]
   cost2 <- 150000*m2+b2
@@ -474,7 +477,7 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
     Comparison = c("Comparison 1", "Comparison 2"))
   
   ggplot(data = df_results, aes(x = Cost, y = Willingness2Pay, color = Comparison, group = Comparison)) +
-    annotate("text", y = 50000, x = 14300.690-522.43, label = "T-DXd Actual Monthly Cost", family = "Arial", size = 3) +
+    annotate("text", y = 50000, x = 14300.690, label = "T-DXd Actual Monthly Cost", family = "Arial", size = 3) +
     annotate("text", y = 175000, x = cost2, label = paste0(round(cost2, 1), " USD"), family = "Arial", size = 3, vjust = 0.5) +
     annotate("text", y = 175000, x = cost1, label = paste0(round(cost1, 1), " USD"), family = "Arial", size = 3, vjust = 0.5) +
     geom_line(aes(linetype = Comparison, show.legend = FALSE)) +
@@ -500,7 +503,7 @@ one_way_sensitivity_tdxd_price <- function(df, dr_v){
 }
 
 #Appendix Plot
-df_one_way = list(df_tdxd_chemo, df_chemo_tdxd, df_tdxd_sg)
+df_one_way = list(df_tdxd_chemo, df_chemo_tdxd, df_chemo_chemo)
 one_way_sensitivity_tdxd_price(df_one_way, dr_v = df_list_tdxd_chemo[[3]])
 
 
