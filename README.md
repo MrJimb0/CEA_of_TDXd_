@@ -7,13 +7,13 @@ This repository contains the code and data for a cost-effectiveness analysis (CE
 The analysis focuses on assessing the cost-effectiveness of T-DXd by modeling patient transitions through various health states. Two distinct models are utilized:
 
 - 7-State Model: Used to derive specific transition probabilities.
-- 8-State Model: Serves as the primary model for the base case analysis.
+- 8-State and CEA Model: Serves as the primary model for the base case analysis.
 
 Probabilistic Sensitivity Analysis (PSA) is conducted to account for uncertainty in model parameters.
 
 ## Getting Started
 ### Prerequisites
-- **R**
+- **R** (Version 4.0 or higher)
 - Necessary packages:
 install.packages(c("dampack", "ggplot2", "dplyr", "readr", "reshape2"))
 
