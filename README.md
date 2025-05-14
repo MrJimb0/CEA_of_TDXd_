@@ -29,5 +29,5 @@ install.packages(c("dampack", "ggplot2", "dplyr", "readr", "reshape2"))
 
 ## Notes
 - The 7-state model is primarily used to derive specific transition rates, which are then integrated into the 8-state model for comprehensive analysis.
--The TNBC/ directory contains data pertinent to Triple-Negative Breast Cancer, which may be used for comparative purposes or extended analyses.
+- The TNBC/ directory contains data pertinent to Triple-Negative Breast Cancer, which may be used for comparative purposes or extended analyses.
 - The data folder contains the csv output from the main PSA used to create the graphs for the manuscript.
