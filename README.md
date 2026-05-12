@@ -1,6 +1,6 @@
 # Cost-Effectiveness Analysis of T-DXd in Late-Stage HER2-Low Breast Cancer
 
-This repository contains the code and data for a cost-effectiveness analysis (CEA) of Trastuzumab Deruxtecan (T-DXd) in patients with late-stage HER2-low breast cancer. The study employs Markov models to evaluate the economic value of T-DXd therapy compared to standard treatments.
+This repository contains the code and data for the article on the cost-effectiveness analysis (CEA) of Trastuzumab Deruxtecan (T-DXd) in patients with late-stage HER2-low breast cancer. The study employs Markov models to evaluate the economic value of T-DXd therapy compared to standard treatments.
 
 Link to Article: https://ascopubs.org/doi/10.1200/JCO-24-01960 
 
